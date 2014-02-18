@@ -85,25 +85,31 @@ SalesforceId.prototype.to18 = function(id) {
 }
 
 //http://stackoverflow.com/questions/7731778/jquery-get-query-string-parameters
-SalesforceId.prototype.getParameterByName = function(name){
-  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-  var regexS = "[\\?&]"+name+"=([^&#]*)", 
-      regex = new RegExp( regexS ),
-      results = regex.exec( window.location.href );
-  if( results == null ){
-    return "";
-  } else{
-    return decodeURIComponent(results[1].replace(/\+/g, " "));
-  }
+SalesforceId.prototype.getParameterByName = function(name, url){
+	if (typeof(url) == 'undefined') {
+		url = window.location.href;
+	}
+ 
+	name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+	var regexS = "[\\?&]"+name+"=([^&#]*)", 
+		regex = new RegExp( regexS ),
+		results = regex.exec(url);
+	if( results == null ){
+		return "";
+	} else{
+		return decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
 }
 
 
 SalesforceId.prototype.parseId = function(url) {
-	urlParts = url.split('/')
-	id = urlParts.pop().slice(0, 15);
 	
-	if (id.length !== 15) { console.log('ddd');
-		id = this.getParameterByName('id');
+	//it's easier to try the parameter first, and then pull straight from the page, instead of determining if the pagename is an id or no
+	id = this.getParameterByName('id', url)
+	
+	if (id.length !== 15 || !this.isValidId(id)) {
+		urlParts = url.split('/')
+		id = urlParts.pop().slice(0, 15);
 	}
 	
 	
@@ -111,5 +117,5 @@ SalesforceId.prototype.parseId = function(url) {
 }
 
 SalesforceId.prototype.isValidId = function(idToTest) {
-	return true;
+	return new RegExp(/[a-zA-Z0-9]{15}/).test(idToTest);
 }
