@@ -13,16 +13,16 @@ img {
 	height: 75px;
 }
 
-label, input, div#sf18{
+label, input, #sf18{
 	float: left;
 	margin-bottom: 10px;
 }
 
-input, div#sf18{
+input, #sf18{
 	padding: 5px;
 	font-weight: bold;
 	position: relative;
-	top: -7px;
+	top: -10px;
 } div#sf18{
 	position: relative;
 	top: -5px;
@@ -36,6 +36,10 @@ label{
 
 input, #sf15 {
 	font-size: 17px;
+}
+
+#sf15, #sf18{
+	width: 210px;
 }
 
 label{
