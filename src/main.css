@@ -1,6 +1,7 @@
 body {
 	min-width: 357px;
 	overflow-x: hidden;
+	font-family: sans-serif;
 }
 
 img {
@@ -11,10 +12,28 @@ img {
 	height: 75px;
 }
 
-label, input, div{
+label, input, #main > div{
 	float: left;
+	margin-bottom: 10px;
 }
 	
 label{
 	clear:both;
+	width: 80px;
+}
+
+
+input, #sf15 {
+	font-size: 17px;
+}
+
+input{
+	position: relative;
+	top: -7px;
+}
+
+#main{
+	padding: 20px 20px 50px;
+	margin: 0 auto;
+	overflow: hidden;
 }

@@ -24,12 +24,12 @@ chrome.tabs.query({ active: true, lastFocusedWindow:true }, function(tabs){
 				
 			
 			})
-			.val(sfId.id15);
+			.val(sfId.id15)
+			.select();
 			
 			
 		$('#sf18')
 			.html(sfId.id18)
-			.select()
 		;	
 	}); 
 	
@@ -40,8 +40,11 @@ chrome.tabs.query({ active: true, lastFocusedWindow:true }, function(tabs){
 
 function SalesforceId(tab)
 {
-
-	id = this.parseId(tab.url);
+	if (typeof(tab) == 'object') {
+		id = this.parseId(tab.url);
+	} else {
+		id = tab;
+	}
 	
 	if (this.isValidId(id)) {	
 		this.id15 = id;
@@ -107,7 +110,7 @@ SalesforceId.prototype.parseId = function(url) {
 	//it's easier to try the parameter first, and then pull straight from the page, instead of determining if the pagename is an id or no
 	id = this.getParameterByName('id', url)
 	
-	if (id.length !== 15 || !this.isValidId(id)) {
+	if (id.length !== 15 || !this.isValidId(id)) { console.log(url);
 		urlParts = url.split('/')
 		id = urlParts.pop().slice(0, 15);
 	}
